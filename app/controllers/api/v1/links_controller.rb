@@ -1,5 +1,5 @@
 class Api::V1::LinksController < Api::V1::BaseController
-  before_action :set_link, only: :redirect
+  before_action :set_link, except: :create
 
   def create
     @link = Link.new(link_params)
@@ -12,8 +12,18 @@ class Api::V1::LinksController < Api::V1::BaseController
 
   def redirect
     if @link.present?
-      @link.add_click
+      @link.clicks.create
       redirect_to @link.url
+    else
+      head 404
+    end
+  end
+
+  def stats
+    if @link.present?
+      render json: {
+          count: @link.stats(start_time: params[:start_time], end_time: params[:end_time])
+      }, status: :ok
     else
       head 404
     end

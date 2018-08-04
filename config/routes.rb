@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       cache as: 'v1' do
         resources :links, only: :create do
           get :redirect, on: :collection
+          get :stats, on: :collection
         end
 
       end

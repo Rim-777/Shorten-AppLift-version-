@@ -1,21 +1,28 @@
 class Link < ApplicationRecord
   validates :url, presence: true
   before_validation :set_shortcode
-  has_many :clicks, class_name: 'Link::Click', dependent: :destroy , inverse_of: :link
+  has_many :clicks, class_name: 'Link::Click', dependent: :destroy, inverse_of: :link
 
-  def self.new_shortcode
-    loop do
-      shortcode = ShortcodeGenerator.generate(6)
-      return shortcode unless self.find_by_shortcode(shortcode)
+  def stats(**options)
+    start_time = options[:start_time].try(:to_datetime)
+    end_time = options[:end_time].try(:to_datetime) || DateTime.now
+    if start_time.present?
+      clicks.where('created_at >= ? AND created_at < ?', start_time, end_time).count
+    else
+      clicks.count
     end
   end
 
-  def add_click
-    clicks.create
+  private
+
+  def set_shortcode
+    self.shortcode = new_shortcode
   end
 
-  private
-  def set_shortcode
-    self.shortcode = self.class.new_shortcode
+  def new_shortcode
+    loop do
+      code = ShortcodeGenerator.generate(6)
+      return code unless self.class.find_by_shortcode(code)
+    end
   end
 end
