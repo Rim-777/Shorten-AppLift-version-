@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "required": ["url", "shortcode"],
+  "properties": {
+    "url": { "type": "string" },
+    "shortcode": { "type": "string" }
+  }
+}
