@@ -10,6 +10,10 @@ class Link < ApplicationRecord
     end
   end
 
+  def add_click
+    clicks.create
+  end
+
   private
   def set_shortcode
     self.shortcode = self.class.new_shortcode

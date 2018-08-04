@@ -33,4 +33,31 @@ RSpec.describe 'links API' do
       end
     end
   end
+
+  describe 'GET redirect' do
+    describe 'the link is present in the db' do
+      let!(:link) {create(:link, url: 'http://www.applift.de')}
+      before {get '/api/links/redirect', params: {shortcode: link.shortcode}, xhr: true}
+
+      it 'returns status 302' do
+        expect(response.status).to eq 302
+      end
+
+      it 'returns redirect location in response headers' do
+        expect(response.headers['Location']).to eq link.url
+      end
+    end
+
+    describe 'a link is not present in the db' do
+      before {get '/api/links/redirect', params: {shortcode: 'nocode'}, xhr: true}
+
+      it 'returns status 404' do
+        expect(response.status).to eq 404
+      end
+
+      it 'returns an empty response body' do
+        expect(response.body).to be_empty
+      end
+    end
+  end
 end

@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   api vendor_string: 'shorten', default_version: 1 do
     version 1 do
       cache as: 'v1' do
-        resources :links
+        resources :links, only: :create do
+          get :redirect, on: :collection
+        end
+
       end
     end
   end
