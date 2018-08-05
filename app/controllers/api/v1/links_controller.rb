@@ -12,7 +12,7 @@ class Api::V1::LinksController < Api::V1::BaseController
 
   def redirect
     if @link.present?
-      @link.clicks.create
+      @link.add_click
       redirect_to @link.url
     else
       head 404

@@ -8,6 +8,10 @@ class Link < ApplicationRecord
     clicks.where('created_at >= ? AND created_at < ?', start_time, end_time).count
   end
 
+  def add_click
+    clicks.create
+  end
+
   private
 
   def set_shortcode
