@@ -1,7 +1,10 @@
 class Link < ApplicationRecord
   validates :url, presence: true
   before_validation :set_shortcode
-  has_many :clicks, class_name: 'Link::Click', dependent: :destroy, inverse_of: :link
+  has_many :clicks,
+           class_name: 'Link::Click',
+           dependent: :destroy,
+           inverse_of: :link
 
   def stats(start_time, end_time)
     return clicks.count unless start_time.present?

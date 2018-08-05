@@ -6,11 +6,11 @@ gem 'rails', '~> 5.2.0'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'responders', '~> 2.3'
 gem 'api-versions', '~> 1.2', '>= 1.2.1'
+gem 'rack-cors', require: 'rack/cors'
 gem 'rswag-api'
 gem 'rswag-ui'
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rubocop', '~> 0.58.2', require: false
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -26,10 +26,8 @@ group :development do
 end
 
 group :test do
-  gem 'shoulda-matchers'
-  gem 'json_spec'
   gem "json_matchers"
+  gem 'shoulda-matchers'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-

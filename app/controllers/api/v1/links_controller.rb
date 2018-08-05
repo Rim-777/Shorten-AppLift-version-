@@ -4,7 +4,7 @@ class Api::V1::LinksController < Api::V1::BaseController
   def create
     @link = Link.new(link_params)
     if @link.save
-      render json: @link, only: [:url, :shortcode], status: :created
+      render json: @link, only: %i(url shortcode), status: :created
     else
       render json: @link.errors, status: 422
     end
@@ -22,8 +22,8 @@ class Api::V1::LinksController < Api::V1::BaseController
   def stats
     if @link.present?
       start_time = params[:start_time].try(:to_datetime)
-      end_time = params[:end_time].try(:to_datetime) || DateTime.now
-      render json: {clicks: @link.stats(start_time, end_time)}, status: :ok
+      end_time = params[:end_time].try(:to_datetime) || Time.now
+      render json: { clicks: @link.stats(start_time, end_time) }, status: :ok
     else
       head 404
     end

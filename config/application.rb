@@ -1,7 +1,6 @@
 require_relative 'boot'
 
 require "rails"
-# Pick the frameworks you want:
 require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
@@ -15,7 +14,6 @@ Bundler.require(*Rails.groups)
 
 module Shorten
   class Application < Rails::Application
-    config.app_generators.scaffold_controller :responders_controller
     config.load_defaults 5.2
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
