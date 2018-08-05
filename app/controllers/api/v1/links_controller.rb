@@ -21,9 +21,9 @@ class Api::V1::LinksController < Api::V1::BaseController
 
   def stats
     if @link.present?
-      render json: {
-          count: @link.stats(start_time: params[:start_time], end_time: params[:end_time])
-      }, status: :ok
+      start_time = params[:start_time].try(:to_datetime)
+      end_time = params[:end_time].try(:to_datetime) || DateTime.now
+      render json: {clicks: @link.stats(start_time, end_time)}, status: :ok
     else
       head 404
     end

@@ -3,14 +3,9 @@ class Link < ApplicationRecord
   before_validation :set_shortcode
   has_many :clicks, class_name: 'Link::Click', dependent: :destroy, inverse_of: :link
 
-  def stats(**options)
-    start_time = options[:start_time].try(:to_datetime)
-    end_time = options[:end_time].try(:to_datetime) || DateTime.now
-    if start_time.present?
-      clicks.where('created_at >= ? AND created_at < ?', start_time, end_time).count
-    else
-      clicks.count
-    end
+  def stats(start_time, end_time)
+    return clicks.count unless start_time.present?
+    clicks.where('created_at >= ? AND created_at < ?', start_time, end_time).count
   end
 
   private
