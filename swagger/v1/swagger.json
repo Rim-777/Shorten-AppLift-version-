@@ -1,0 +1,46 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "api/links": {
+      "post": {
+        "summary": "shortens url",
+        "tags": [
+          "Links"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "link",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "url"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "link is created"
+          },
+          "422": {
+            "description": "invalid request"
+          }
+        }
+      }
+    }
+  }
+}

@@ -8,14 +8,14 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'api-versions', '~> 1.2', '>= 1.2.1'
 gem 'rack-cors', require: 'rack/cors'
-gem 'rswag-api'
-gem 'rswag-ui'
+# gem 'rswag-api'
+# gem 'rswag-ui'
 gem 'rubocop', '~> 0.58.2', require: false
-
+gem 'rswag'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
-  gem 'rswag-specs'
+  # gem 'rswag-specs'
   gem 'factory_bot_rails'
 end
 
