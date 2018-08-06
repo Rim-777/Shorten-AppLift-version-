@@ -1,24 +1,97 @@
-# README
+## Shorty
+Ruby Rails application for REST API with ActiveRecord, RSpec, Swagger
+### Description:
+The application receives  URLs(string) and creates shortened links.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Implemented features:
+ 1. A guest can send a URL to create unique short URL.
+ 2. A guest can visit a short url and will be redirected to the original URL.
+ 3. A guest can get the stats (clicks/day, total clicks) for a short URL in a specific period of
+ time.
+### Dependencies:
+- Ruby 2.5.1
+- PostgreSQL
 
-Things you may want to cover:
+### Installation:
 
-* Ruby version
+###  Using Docker:
+To run application on docker:
 
-* System dependencies
+- Please install Docker and Docker-Compose
+- Clone the project
 
-* Configuration
+- To create the database.yml please run  the following script on the project root:
+```shell
+$ cp config/database.yml.sample config/database.yml
+```
+- Run following commands on the project root:
 
-* Database creation
+```shell
+$ docker-compose build
+$ docker-compose up
 
-* Database initialization
+# Open another terminal and run:
+$ docker-compose run web bundle exec rake db:create db:migrate
+```
 
-* How to run the test suite
+##### Tests:
 
-* Services (job queues, cache servers, search engines, etc.)
+To execute tests, run following commands:
+ 
+```shell
+ $ docker-compose run web bundle exec rake db:migrate RAILS_ENV=test #(the first time only)
+ $ docker-compose run web bundle exec rspec
+```
+### Regular Installation:
+- Clone poject
+- Run bundler:
 
-* Deployment instructions
+ ```shell
+ $ bundle install
+ ```
+Create database.yml:
+```shell
+$ cp config/database.yml.sample config/database.yml
+```
+##### Important: 
+Before the next step please change the host value in config/database.yml from `db` to `your_host_url`
+- Create database and run migrations:
 
-* ...
+ ```shell
+ $ bundle exec rake db:create db:migrate
+ ```
+ 
+- Run application:
+
+ ```shell
+ $ rails server
+ ```
+
+##### Tests:
+
+To execute tests, run following commands:
+ 
+```shell
+ $ bundle exec rake db:migrate RAILS_ENV=test #(the first time only)
+ $ bundle exec rspec
+```
+### Swagger Documentation
+
+Enter the root application address in the browser:
+
+```shell
+http://localhost:3000/api-docs
+```
+
+### Explanation of the Approach:
+To avoid any excessive complexity I used DBMS PostgreSQL.
+My opinion - PostgreSQL is the classic solution and it should be enough for long time.
+In the future(if necessary), we can make the following optimization:
+* Use Redis for the cache storage (it will make  the uniqueness checking process faster).
+* If we don't need the absolute accuracy of the redirects number, we can move increment to the background job. 
+* In case if the 'Links' - table becames huge we can use some full-text search engine such as Elasticsearch or Sphinx. 
+But now it would be overkill.
+
+### License
+
+The software is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

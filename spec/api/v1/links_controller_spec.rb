@@ -101,7 +101,7 @@ RSpec.describe 'links API' do
       end
     end
 
-    context 'a end-time is only present' do
+    context 'end time is only present' do
       let(:params) { { shortcode: link.shortcode, end_time: '2018/07/10 13:00' } }
       before {get '/api/links/stats', params: params, xhr: true}
 
@@ -118,7 +118,7 @@ RSpec.describe 'links API' do
 
       it_behaves_like 'NotFound'
 
-      it 'returns stats with all clicks' do
+      it 'returns an empty response body' do
         expect(response.body).to be_empty
       end
     end
@@ -129,7 +129,7 @@ RSpec.describe 'links API' do
 
       it_behaves_like 'NotFound'
 
-      it 'returns stats with all clicks' do
+      it 'returns an empty response body' do
         expect(response.body).to be_empty
       end
     end

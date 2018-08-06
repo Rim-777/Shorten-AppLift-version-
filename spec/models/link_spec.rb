@@ -8,7 +8,7 @@ RSpec.describe Link, type: :model do
     context 'valid attributes' do
       let(:link) { build(:link, url: 'https://short-urls') }
 
-      it 'saves a new link into the database' do
+      it 'saves a new link in the database' do
         expect { link.save }.to change(Link, :count).by(1)
       end
     end

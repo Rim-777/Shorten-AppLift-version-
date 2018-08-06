@@ -1,0 +1,162 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/links": {
+      "post": {
+        "summary": "shortens url",
+        "tags": [
+          "Create"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "url",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "url"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "examples": {
+              "application/json": {
+                "url": "https://github.com/rim-777/timomoss",
+                "shortcode": "QW2ERt"
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid params",
+            "examples": {
+              "application/json": {
+                "url": [
+                  "can't be blank"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/links/redirect": {
+      "get": {
+        "summary": "redirects to the real url",
+        "tags": [
+          "Redirect"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "shortcode",
+            "in": "path",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "shortcode": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "shortcode"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "redirects to the url"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/links/stats": {
+      "get": {
+        "summary": "returns stats for the specific period or total clicks number",
+        "tags": [
+          "Stats"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "shortcode",
+            "in": "path",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "shortcode": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          {
+            "name": "start_time",
+            "format": "YYYY/MM/DD hh:mm",
+            "in": "path",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start_time": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": false
+          },
+          {
+            "name": "end_time",
+            "format": "YYYY/MM/DD hh:mm",
+            "in": "path",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "end_time": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns  a clicks number",
+            "examples": {
+              "application/json": {
+                "clicks": 150
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  }
+}

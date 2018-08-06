@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2018_08_04_143857) do
   end
 
   create_table "links", force: :cascade do |t|
-    t.string "url", null: false
+    t.text "url", null: false
     t.string "shortcode", null: false
     t.datetime "created_at", null: false
     t.index ["shortcode"], name: "index_links_on_shortcode", unique: true
